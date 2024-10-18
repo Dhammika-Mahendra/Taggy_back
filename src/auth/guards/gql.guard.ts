@@ -1,4 +1,4 @@
-import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
@@ -13,7 +13,7 @@ export class GqlAuthGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    // Switch the context to GraphQL
+
     const ctx = GqlExecutionContext.create(context);
     const request = ctx.getContext().req;  // Get the request object
 
@@ -24,20 +24,16 @@ export class GqlAuthGuard implements CanActivate {
     }
 
     try {
-      // Verify the token
       const payload = this.jwtService.verify(token, {
-        secret: this.configService.get('JWT_SECRET'),
+        secret: this.configService.get<string>('JWT_SECRET'),
       });
-
-      // Retrieve the user based on the payload (userId from token)
-      const user = await this.usersService.getUser({ _id: payload.userId });
+      Logger.log(payload);
+      const user = await this.usersService.validateUserByEmail(payload['email']);
 
       if (!user) {
-        throw new UnauthorizedException('Invalid token');
+        throw new UnauthorizedException('Invalid User');
       }
 
-      // Attach the user to the request context
-      request.user = user;
     } catch (err) {
       throw new UnauthorizedException('Invalid token');
     }
@@ -46,12 +42,9 @@ export class GqlAuthGuard implements CanActivate {
     return true;
   }
 
-  // Helper function to extract token from the request headers
+  // Helper function to extract token from the request cookies
   private extractTokenFromRequest(request: any): string | null {
-    const authHeader = request.headers.authorization;
-    if (authHeader && authHeader.startsWith('Bearer ')) {
-      return authHeader.split(' ')[1];  // Extract token after "Bearer"
-    }
-    return null;
+    const token = request.cookies['Authentication'];  // Assuming the cookie is named 'Authentication'
+    return token ? token : null;  
   }
 }

@@ -56,5 +56,13 @@ export class UsersService {
         }
         return this.toModel(userDocument);
     }
+
+    async validateUserByEmail(email: string) {
+        const userDocument = await this.usersRepository.findOne({ email});
+        if(userDocument==undefined){
+            throw new UnauthorizedException('Invalid user');
+        }
+        return this.toModel(userDocument);
+    }
 }
 

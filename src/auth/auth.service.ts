@@ -5,15 +5,15 @@ import { Response } from 'express';
 import { User } from 'src/users/models/User.model';
 
 export interface TokenPayload {
-   userId: string;     
+   email: string;     
 }
 
 @Injectable()
 export class AuthService {
     constructor(private readonly configService: ConfigService, private readonly jwtService: JwtService){}
 
-    async login(user: User, response: Response) {
-        const tokenPayLoad: TokenPayload = {userId: user._id};
+    async login(email :string, response: Response) {
+        const tokenPayLoad: TokenPayload = {email: email};
 
         const expire = new Date();
         expire.setTime(expire.getTime() + this.configService.get<number>('JWT_EXPIRATION')*1000);

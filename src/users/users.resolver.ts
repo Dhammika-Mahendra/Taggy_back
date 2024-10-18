@@ -16,7 +16,6 @@ export class UsersResolver {
     }
 
     @Query(()=>User,{name:'user'})
-    @UseGuards(GqlAuthGuard)
     async getUser(@Args() getUserArgs : GetUserArgs){
         return this.userService.getUser(getUserArgs);
     }

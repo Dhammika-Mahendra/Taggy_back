@@ -10,9 +10,9 @@ export class AuthController {
 
     @UseGuards(AuthGuard)
     @Post('login')
-    async login(@Body() user: User, @Res({passthrough:true}) response : Response) {
-        await this.authService.login(user, response);
-        response.send(user);
+    async login(@Body() body : {email:string, password:string}, @Res({passthrough:true}) response : Response) {
+        await this.authService.login(body.email, response);
+        response.send(body);
     }
 
     @Get('log')
