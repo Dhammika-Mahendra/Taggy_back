@@ -1,4 +1,4 @@
-import { Injectable, UnprocessableEntityException } from '@nestjs/common';
+import { Injectable, Logger, UnauthorizedException, UnprocessableEntityException } from '@nestjs/common';
 import { CreateUserInput } from './dto/input/create-user-input';
 import { GetUserArgs } from './dto/args/get-user-args';
 import { UserRepository } from '../database/users.repository';
@@ -41,5 +41,17 @@ export class UsersService {
         return this.toModel(userDocument);
     }
 
+
+    //For JWT authentication
+    //checks if a user with the given email exists and if the password is correct
+
+    async validateUser(email: string, password: string) {
+        const userDocument = await this.usersRepository.findOne({ email });
+        const isPasswordValid = await bcrypt.compare(password, userDocument.password);
+        if(!isPasswordValid){
+            throw new UnauthorizedException('Invalid credentials');
+        }
+        return this.toModel(userDocument);
+    }
 }
 
