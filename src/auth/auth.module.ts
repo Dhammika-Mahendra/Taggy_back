@@ -1,12 +1,12 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { UsersModule } from 'src/users/users.module';
-import { LocalStrategy } from './strategies/local.strategy';
 import { PassportModule } from '@nestjs/passport';
-import { AuthGuard } from './auth.guard';
+import { AuthGuard } from './guards/auth.guard';
+import { GqlAuthGuard } from './guards/gql.guard';
 
 @Module({
   imports:[
@@ -19,9 +19,10 @@ import { AuthGuard } from './auth.guard';
         inject: [ConfigService],
       }),
     PassportModule,
-    UsersModule
+    forwardRef(() => UsersModule)
   ],
+  exports:[JwtModule],
   controllers: [AuthController],
-  providers: [AuthService,LocalStrategy,AuthGuard]
+  providers: [AuthService,AuthGuard,GqlAuthGuard]
 })
 export class AuthModule {}

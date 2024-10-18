@@ -2,7 +2,7 @@ import { Body, Controller, Get, Logger, Post, Res, UseGuards } from '@nestjs/com
 import { User } from 'src/users/models/User.model';
 import { Response, response } from 'express';
 import { AuthService } from './auth.service';
-import { AuthGuard } from './auth.guard';
+import { AuthGuard } from './guards/auth.guard';
 
 @Controller('auth')
 export class AuthController {

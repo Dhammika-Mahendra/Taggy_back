@@ -5,7 +5,6 @@ import { AbstractSchema } from "./abstract.schema";
 //Abstract methods are explicitly defined here (repository functons)
 
 export abstract class AbstractRepository<TDocument extends AbstractSchema> { 
-    protected abstract readonly logger: Logger;
 
     constructor(protected readonly model: Model<TDocument>) {}
 
@@ -22,7 +21,6 @@ export abstract class AbstractRepository<TDocument extends AbstractSchema> {
     async findOne(filterQuery: FilterQuery<TDocument>): Promise<TDocument> { 
         const document = await this.model.findOne(filterQuery, {}, { lean: true });
         if (!document) {
-            this.logger.warn(`Document not found with filter`,filterQuery);
             throw new NotFoundException('Document not found');
         }
         return document as TDocument;
