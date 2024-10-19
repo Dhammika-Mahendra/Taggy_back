@@ -19,6 +19,9 @@ jobs:
     - name: Install dependencies
       run: npm install
 
+    - name: Install Nest.js CLI globally
+      run: npm install -g @nestjs/cli
+
     - name: Create .env file
       run: |
         echo FRONT_ORIGIN=${{ true }} >> .env
