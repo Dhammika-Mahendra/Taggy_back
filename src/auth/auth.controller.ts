@@ -3,6 +3,7 @@ import { User } from 'src/users/models/User.model';
 import { Response, response } from 'express';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './guards/auth.guard';
+import { GqlAuthGuard } from './guards/gql.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -15,8 +16,9 @@ export class AuthController {
         response.send(body);
     }
 
-    @Get('log')
-    getHello(): string {
-        return 'Hello World!';
+    @UseGuards(GqlAuthGuard)
+    @Get('')
+    getHello(): boolean {
+        return true;
     }
 }

@@ -27,7 +27,6 @@ export class GqlAuthGuard implements CanActivate {
       const payload = this.jwtService.verify(token, {
         secret: this.configService.get<string>('JWT_SECRET'),
       });
-      Logger.log(payload);
       const user = await this.usersService.validateUserByEmail(payload['email']);
 
       if (!user) {
