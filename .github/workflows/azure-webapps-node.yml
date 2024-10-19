@@ -21,7 +21,7 @@ jobs:
 
     - name: Create .env file
       run: |
-        echo FRONT_ORIGIN=${{ secrets.FRONT_ORIGIN }} >> .env
+        echo FRONT_ORIGIN=${{ true }} >> .env
         echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
         echo MONGO_URI=${{ secrets.MONGO_URI }} >> .env
 
