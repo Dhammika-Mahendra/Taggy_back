@@ -14,10 +14,8 @@ export class GqlAuthGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
 
-    const ctx = GqlExecutionContext.create(context);
-    const request = ctx.getContext().req;  // Get the request object
-
-    const token = this.extractTokenFromRequest(request);
+    const request = context.switchToHttp().getRequest<Request>();
+    const token = request.headers['authorization']?.split(' ')[1]; // Extract token from Bearer header
 
     if (!token) {
       throw new UnauthorizedException('Authentication token not found');

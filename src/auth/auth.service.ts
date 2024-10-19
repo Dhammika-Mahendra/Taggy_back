@@ -20,10 +20,7 @@ export class AuthService {
 
         const token = this.jwtService.sign(tokenPayLoad);
 
-        response.cookie('Authentication', token, {
-            httpOnly: true,
-            expires: expire
-        });
+        response.send({ taggy_token: token});
     }
 
 }

@@ -13,12 +13,11 @@ export class AuthController {
     @Post('login')
     async login(@Body() body : {email:string, password:string}, @Res({passthrough:true}) response : Response) {
         await this.authService.login(body.email, response);
-        response.send(body);
     }
 
     @UseGuards(GqlAuthGuard)
-    @Get('')
-    getHello(): boolean {
+    @Post('')
+    async checkAuth(): Promise<boolean> {
         return true;
     }
 }
