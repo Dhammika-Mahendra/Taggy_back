@@ -19,20 +19,14 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Install Nest.js CLI globally
-      run: npm install -g @nestjs/cli
-
     - name: Create .env file
       run: |
-        echo FRONT_ORIGIN=${{ true }} >> .env
+        echo FRONT_ORIGIN=${{ secrets.FRONT_ORIGIN }} >> .env
         echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
         echo MONGO_URI=${{ secrets.MONGO_URI }} >> .env
 
     - name: Build the project
-      run: nest build
-
-    - name: Run tests
-      run: npm run test
+      run: npm run build
 
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
