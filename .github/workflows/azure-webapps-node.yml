@@ -31,6 +31,9 @@ jobs:
     - name: Build the project
       run: nest build
 
+    - name: Run tests
+      run: npm run test
+
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
