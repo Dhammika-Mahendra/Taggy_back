@@ -20,4 +20,9 @@ export class AuthController {
     async checkAuth(): Promise<boolean> {
         return true;
     }
+
+    @Get('hello')
+    getHello() : string {
+        return "Hello";
+    }
 }
