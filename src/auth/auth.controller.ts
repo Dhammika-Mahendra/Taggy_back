@@ -4,6 +4,7 @@ import { Response, response } from 'express';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { GqlAuthGuard } from './guards/gql.guard';
+import { UserIDdeco } from './guards/UserId.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -21,8 +22,9 @@ export class AuthController {
         return true;
     }
 
+    @UseGuards(GqlAuthGuard)
     @Get('hello')
-    getHello() : string {
-        return "Hello";
+    getHello(@UserIDdeco() userId:string) : string {
+        return "Hello"+userId;
     }
 }

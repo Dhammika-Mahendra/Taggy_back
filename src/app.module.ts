@@ -9,6 +9,7 @@ import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import { UsersService } from './users/users.service';
 import { AuthModule } from './auth/auth.module';
+import { BookmarksModule } from './bookmarks/bookmarks.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { AuthModule } from './auth/auth.module';
     }),
     UsersModule,
     DatabaseModule,
-    AuthModule
+    AuthModule,
+    BookmarksModule
   ],
   controllers: [AppController],
   providers: [AppService],

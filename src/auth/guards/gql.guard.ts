@@ -1,5 +1,4 @@
 import { CanActivate, ExecutionContext, Injectable, Logger, UnauthorizedException } from '@nestjs/common';
-import { GqlExecutionContext } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { UsersService } from 'src/users/users.service';
@@ -29,19 +28,14 @@ export class GqlAuthGuard implements CanActivate {
 
       if (!user) {
         throw new UnauthorizedException('Invalid User');
+      }else{
+        request['userID'] = user._id;
       }
-
     } catch (err) {
       throw new UnauthorizedException('Invalid token');
     }
 
     // If everything is valid, allow the request to proceed
     return true;
-  }
-
-  // Helper function to extract token from the request cookies
-  private extractTokenFromRequest(request: any): string | null {
-    const token = request.cookies['Authentication'];  // Assuming the cookie is named 'Authentication'
-    return token ? token : null;  
   }
 }
