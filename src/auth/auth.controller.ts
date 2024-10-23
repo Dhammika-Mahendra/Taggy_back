@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Logger, Post, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { User } from 'src/users/models/User.model';
-import { Response, response } from 'express';
+import { Request, Response, response } from 'express';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { GqlAuthGuard } from './guards/gql.guard';
