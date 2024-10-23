@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { GqlAuthGuard } from './guards/gql.guard';
 import { UserIDdeco } from './guards/UserId.decorator';
+import { JwtAuthGuard } from './guards/jwt.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -16,13 +17,13 @@ export class AuthController {
         await this.authService.login(body.email, response);
     }
 
-    @UseGuards(GqlAuthGuard)
+    @UseGuards(JwtAuthGuard)
     @Post('')
     async checkAuth(): Promise<boolean> {
         return true;
     }
 
-    @UseGuards(GqlAuthGuard)
+    @UseGuards(JwtAuthGuard)
     @Get('hello')
     getHello(@UserIDdeco() userId:string) : string {
         return "Hello"+userId;

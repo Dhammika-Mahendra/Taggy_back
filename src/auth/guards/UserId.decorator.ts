@@ -8,7 +8,7 @@ export const getCurrentUserIdByContext = (context: ExecutionContext): string => 
         return val;
     }
     const ctx = GqlExecutionContext.create(context);
-    return ctx.getContext().req.UserID;
+    return ctx.getContext().req['userID'];
 };
 
 export const UserIDdeco = createParamDecorator(

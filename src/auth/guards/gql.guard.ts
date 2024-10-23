@@ -2,6 +2,7 @@ import { CanActivate, ExecutionContext, Injectable, Logger, UnauthorizedExceptio
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { UsersService } from 'src/users/users.service';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 @Injectable()
 export class GqlAuthGuard implements CanActivate {
@@ -13,8 +14,10 @@ export class GqlAuthGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
 
-    const request = context.switchToHttp().getRequest<Request>();
-    const token = request.headers['authorization']?.split(' ')[1]; // Extract token from Bearer header
+    const ctx = GqlExecutionContext.create(context);
+    const { req } = ctx.getContext(); // Get request from GraphQL context
+
+    const token = req.headers['authorization']?.split(' ')[1];
 
     if (!token) {
       throw new UnauthorizedException('Authentication token not found');
@@ -29,7 +32,7 @@ export class GqlAuthGuard implements CanActivate {
       if (!user) {
         throw new UnauthorizedException('Invalid User');
       }else{
-        request['userID'] = user._id;
+        req['userID'] = user._id;
       }
     } catch (err) {
       throw new UnauthorizedException('Invalid token');
