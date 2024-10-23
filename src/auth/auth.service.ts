@@ -2,7 +2,9 @@ import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Response } from 'express';
+import { UserDocument } from 'src/database/User.schema';
 import { User } from 'src/users/models/User.model';
+import { UsersService } from 'src/users/users.service';
 
 export interface TokenPayload {
    email: string;     
@@ -10,7 +12,10 @@ export interface TokenPayload {
 
 @Injectable()
 export class AuthService {
-    constructor(private readonly configService: ConfigService, private readonly jwtService: JwtService){}
+    constructor(
+        private readonly configService: ConfigService, 
+        private readonly jwtService: JwtService
+    ){}
 
     async login(email :string, response: Response) {
         const tokenPayLoad: TokenPayload = {email: email};

@@ -29,19 +29,16 @@ export class GqlAuthGuard implements CanActivate {
 
       if (!user) {
         throw new UnauthorizedException('Invalid User');
+      }else{
+        Logger.log(user._id);
+        request['userID'] = user._id;
       }
-
     } catch (err) {
       throw new UnauthorizedException('Invalid token');
     }
 
+    Logger.log(request);
     // If everything is valid, allow the request to proceed
     return true;
-  }
-
-  // Helper function to extract token from the request cookies
-  private extractTokenFromRequest(request: any): string | null {
-    const token = request.cookies['Authentication'];  // Assuming the cookie is named 'Authentication'
-    return token ? token : null;  
   }
 }
