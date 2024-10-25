@@ -20,6 +20,7 @@ export class JwtAuthGuard implements CanActivate {
       throw new UnauthorizedException('Authentication token not found');
     }
 
+    
     try {
       const payload = this.jwtService.verify(token, {
         secret: this.configService.get<string>('JWT_SECRET'),
