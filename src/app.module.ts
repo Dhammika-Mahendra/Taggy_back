@@ -10,6 +10,7 @@ import { DatabaseModule } from './database/database.module';
 import { UsersService } from './users/users.service';
 import { AuthModule } from './auth/auth.module';
 import { BookmarksModule } from './bookmarks/bookmarks.module';
+import { LinksModule } from './links/links.module';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { BookmarksModule } from './bookmarks/bookmarks.module';
     UsersModule,
     DatabaseModule,
     AuthModule,
-    BookmarksModule
+    BookmarksModule,
+    LinksModule
   ],
   controllers: [AppController],
   providers: [AppService],
