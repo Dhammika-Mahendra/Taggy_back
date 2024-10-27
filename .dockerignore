@@ -1,0 +1,35 @@
+# Ignore node modules and dependencies
+node_modules
+dist
+
+# Ignore logs
+*.log
+
+# Ignore environment files (if generated locally)
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Ignore test files
+coverage
+tests
+__tests__
+__mocks__
+__snapshots__
+
+# Ignore Git files
+.git
+.gitignore
+
+# Ignore Docker-related files not needed inside the container
+Dockerfile
+.dockerignore
+
+# Ignore IDE and OS-specific files
+*.swp
+*~
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
