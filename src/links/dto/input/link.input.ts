@@ -1,7 +1,7 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
 
-@ObjectType()
-export class Link {
+@InputType()
+export class LinkInput {
   @Field()
   readonly title: string;
 

@@ -9,6 +9,7 @@ import { UsersModule } from 'src/users/users.module';
     AuthModule,
     UsersModule
   ],
-  providers: [LinksService, LinksResolver]
+  providers: [LinksService, LinksResolver],
+  exports: [LinksService]
 })
 export class LinksModule {}
